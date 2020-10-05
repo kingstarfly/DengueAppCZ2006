@@ -1,14 +1,28 @@
-import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import { globalStyles } from '../styles/global'
+import React from "react";
+import { StyleSheet, Text, View, Button } from "react-native";
+import { globalStyles } from "../styles/global";
 
-const CasesScreen = ( { navigation }) => {
-    return (
-        <View style={globalStyles.blueContainer}>
-            <Text>View Cases</Text>
-            <Button title="Go to Home" onPress={() => navigation.navigate("Home")} />
-        </View>
-    );
-}
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+
+import SpecificLocationScreen from "./SpecificLocationScreen";
+import SingaporeLocationScreen from "./SingaporeLocationScreen";
+
+const Tab = createMaterialTopTabNavigator();
+
+const CasesScreen = ({ navigation }) => {
+  return (
+    <Tab.Navigator
+      initialRouteName="SpecificLocation"
+      screenOptions={{ headerShown: false }}
+      backBehavior={"none"}
+    >
+      <Tab.Screen name="SpecificLocation" component={SpecificLocationScreen} />
+      <Tab.Screen
+        name="SingaporeLocation"
+        component={SingaporeLocationScreen}
+      />
+    </Tab.Navigator>
+  );
+};
 
 export default CasesScreen;

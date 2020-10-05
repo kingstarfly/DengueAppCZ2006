@@ -1,6 +1,8 @@
 import { CardStyleInterpolators } from '@react-navigation/stack';
 import React from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+
 
 const HomeScreen = ( { navigation }) => {
     return (
@@ -10,7 +12,7 @@ const HomeScreen = ( { navigation }) => {
             </View>
 
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.buttonBlue} onPress={() => navigation.navigate("Cases")}>
+                <TouchableOpacity style={styles.buttonBlue} onPress={() => navigation.navigate("SelectLocation")}>
                     <Text style={styles.menuText}>View Cases</Text>
                 </TouchableOpacity>
 
@@ -23,6 +25,7 @@ const HomeScreen = ( { navigation }) => {
                 </TouchableOpacity>
 
             </View>
+            <StatusBar hidden/>
         </View>
     );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList } from "react-native";
 import { globalStyles } from "../styles/global";
 
 const Resource = ({ data }) => {

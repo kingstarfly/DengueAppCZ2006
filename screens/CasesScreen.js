@@ -25,6 +25,8 @@ const CasesScreen = ({ navigation }) => {
           marginBottom: 2,
           borderRadius: 10,
           marginHorizontal: "auto",
+          backgroundColor: "white",
+          borderWidth: 1
         },
       }}
       initialRouteName="SpecificLocation"

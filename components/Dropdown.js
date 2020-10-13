@@ -8,17 +8,20 @@ import {
   TextInput,
 } from "react-native";
 
-const ListItem = ({ data }) => {
+const ListItem = ({ data, handleOptionPress }) => {
   return (
-    <TouchableOpacity style={styles.itemStyle}>
+    <TouchableOpacity
+      style={styles.itemStyle}
+      onPress={() => handleOptionPress(data)}
+    >
       <Text style={styles.option}>{data.text}</Text>
     </TouchableOpacity>
   );
 };
 
-const Dropdown = ({ addresses }) => {
+const Dropdown = ({ addresses, handleOptionPress }) => {
   const renderItem = ({ item }) => {
-    return <ListItem data={item} />;
+    return <ListItem data={item} handleOptionPress={handleOptionPress} />;
   };
 
   const ItemSeperator = () => {

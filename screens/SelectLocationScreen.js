@@ -43,7 +43,7 @@ const MOCK_DATA = [
 const SelectLocationScreen = ({ navigation }) => {
   const [loc, setLoc] = useState("Current Location");
   const [query, setQuery] = useState("");
-  const [addresses, setAddresses] = useState(MOCK_DATA);
+  const [addresses, setAddresses] = useState([]);
 
   const onLocSelect = (loc) => {
     navigation.navigate("Cases", {
@@ -55,6 +55,11 @@ const SelectLocationScreen = ({ navigation }) => {
   };
 
   const searchFilterFunction = (query) => {
+    if (query == "") {
+      setAddresses([]);
+      setQuery(query);
+      return;
+    }
     const newData = MOCK_DATA.filter((item) => {
       const itemText = `${item.text.toLowerCase()}`;
       const queryText = query.toLowerCase();
@@ -66,57 +71,26 @@ const SelectLocationScreen = ({ navigation }) => {
     setQuery(query);
   };
 
+  const handleOptionPress = (data) => {
+    const address = data.text;
+
+    navigation.navigate("Cases", {
+      screen: "SpecificLocation",
+      params: {
+        loc: address,
+      },
+    });
+  };
+
   return (
     <View style={globalStyles.blueContainer}>
       <View style={styles.locationContainer}>
         <Text style={styles.title}>Select your location</Text>
       </View>
       <View style={styles.pickerContainer}>
-        <SearchBar
-          style={{ marginVertical: 10 }}
-          query={query}
-          searchFilterFunction={searchFilterFunction}
-        />
-        <Dropdown addresses={addresses} />
-        {/* <TouchableOpacity style={styles.picker}>
-          <Picker
-            prompt={"Select your location"}
-            style={{
-              height: 50,
-              width: 300,
-              color: "white",
-              overflow: "scroll",
-            }}
-            selectedValue={loc}
-            onValueChange={(newVal, newIndex) => {
-              setLoc(newVal);
-              onLocSelect(newVal);
-            }}
-          >
-            <Picker.Item label="Current Location" value="Current Location" />
-            <Picker.Item
-              label="71 Marine Parade Drive"
-              value="71 Marine Parade Drive"
-            />
-            <Picker.Item
-              label="123 Teenage Street"
-              value="123 Teenage Street"
-            />
-          </Picker>
-        </TouchableOpacity> */}
+        <SearchBar query={query} searchFilterFunction={searchFilterFunction} />
+        <Dropdown addresses={addresses} handleOptionPress={handleOptionPress} />
       </View>
-
-      {/* <Button
-        title="Go"
-        onPress={() =>
-          navigation.navigate("Cases", {
-            screen: "SpecificLocation",
-            params: {
-              loc: loc,
-            },
-          })
-        }
-      /> */}
     </View>
   );
 };

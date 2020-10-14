@@ -8,20 +8,23 @@ import {
   TextInput,
 } from "react-native";
 
-const ListItem = ({ data, handleOptionPress }) => {
+const ListItem = ({ item, handleOptionPress }) => {
   return (
     <TouchableOpacity
       style={styles.itemStyle}
-      onPress={() => handleOptionPress(data)}
+      onPress={() => handleOptionPress(item)}
     >
-      <Text style={styles.option}>{data.text}</Text>
+      <Text style={styles.option}>{item.address}</Text>
     </TouchableOpacity>
   );
 };
 
-const Dropdown = ({ addresses, handleOptionPress }) => {
+const Dropdown = ({ selectedAddresses, handleOptionPress, query }) => {
+  console.log("Dropdown", selectedAddresses);
+  console.log("query from dropdown", query);
+
   const renderItem = ({ item }) => {
-    return <ListItem data={item} handleOptionPress={handleOptionPress} />;
+    return <ListItem item={item} handleOptionPress={handleOptionPress} />;
   };
 
   const ItemSeperator = () => {
@@ -36,10 +39,11 @@ const Dropdown = ({ addresses, handleOptionPress }) => {
       ></View>
     );
   };
+
   return (
     <View style={styles.container}>
       <FlatList
-        data={addresses}
+        data={query != "" ? selectedAddresses : []}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}

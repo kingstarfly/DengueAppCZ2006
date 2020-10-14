@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Button, TouchableOpacity } from "react-native";
-import { Picker } from "@react-native-community/picker";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TouchableOpacity,
+  LogBox,
+} from "react-native";
 import { globalStyles } from "../styles/global";
+import { firebase } from "../firebase/config";
 
 import Dropdown from "../components/Dropdown";
 import SearchBar from "../components/SearchBar";
+
+import { YellowBox } from "react-native";
+YellowBox.ignoreWarnings(["Setting a timer"]); // for firebase warnings
+
 const MOCK_DATA = [
   {
     id: "1",
@@ -24,60 +35,73 @@ const MOCK_DATA = [
   },
   {
     id: "5",
-    text: "123 Teenage Road",
+    text: "321 Teenage Road",
   },
   {
     id: "6",
-    text: "456 Adam Street",
+    text: "654 Adam Street",
   },
   {
     id: "7",
-    text: "777 Lucky Drive",
+    text: "111 Lucky Drive",
   },
   {
     id: "8",
-    text: "10 Random Street",
+    text: "5 Random Street",
   },
 ];
 
 const SelectLocationScreen = ({ navigation }) => {
-  const [loc, setLoc] = useState("Current Location");
   const [query, setQuery] = useState("");
-  const [addresses, setAddresses] = useState([]);
+  const [selectedAddresses, setSelectedAddresses] = useState([]);
+  const [addressObjects, setAddressObjects] = useState([]); // get from firebase and not change this
 
-  const onLocSelect = (loc) => {
-    navigation.navigate("Cases", {
-      screen: "SpecificLocation",
-      params: {
-        loc: loc,
-      },
-    });
-  };
+  const entityRef = firebase.firestore().collection("14DayData");
+
+  useEffect(() => {
+    entityRef
+      .doc("13102020")
+      .get()
+      .then((doc) => {
+        let newAddressObjects = [];
+        for (const [address, caseObject] of Object.entries(doc.data())) {
+          newAddressObjects = [
+            ...newAddressObjects,
+            {
+              id: caseObject.id,
+              address: address,
+              num_cases: caseObject.num_cases,
+            },
+          ];
+        }
+        console.log("Retrieved from firebase", newAddressObjects);
+        setAddressObjects(newAddressObjects);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const searchFilterFunction = (query) => {
-    if (query == "") {
-      setAddresses([]);
-      setQuery(query);
-      return;
-    }
-    const newData = MOCK_DATA.filter((item) => {
-      const itemText = `${item.text.toLowerCase()}`;
+    console.log("SearchFuncton: addressObjects = ", addressObjects);
+    const newData = addressObjects.filter((item) => {
       const queryText = query.toLowerCase();
-
+      const itemText = item.address.toLowerCase();
       return itemText.indexOf(queryText) > -1;
     });
 
-    setAddresses(newData);
+    console.log("SearchFuncton: newData = ", newData);
+
+    setSelectedAddresses(newData);
     setQuery(query);
   };
 
-  const handleOptionPress = (data) => {
-    const address = data.text;
-
+  const handleOptionPress = (addressObject) => {
     navigation.navigate("Cases", {
       screen: "SpecificLocation",
       params: {
-        loc: address,
+        address: addressObject.address,
+        num_cases: addressObject.num_cases,
       },
     });
   };
@@ -89,7 +113,11 @@ const SelectLocationScreen = ({ navigation }) => {
       </View>
       <View style={styles.pickerContainer}>
         <SearchBar query={query} searchFilterFunction={searchFilterFunction} />
-        <Dropdown addresses={addresses} handleOptionPress={handleOptionPress} />
+        <Dropdown
+          selectedAddresses={selectedAddresses}
+          handleOptionPress={handleOptionPress}
+          query={query}
+        />
       </View>
     </View>
   );

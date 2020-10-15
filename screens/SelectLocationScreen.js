@@ -70,6 +70,8 @@ const SelectLocationScreen = ({ navigation }) => {
           let dataArray = [];
           doc.ref
             .collection("data")
+            .orderBy("date", "desc")
+            .limit(5) // take only 5 dates
             .get()
             .then((innerQuerySnapShot) => {
               innerQuerySnapShot.forEach((innerDoc) => {
@@ -80,8 +82,10 @@ const SelectLocationScreen = ({ navigation }) => {
                 });
                 // console.log("this is inner each dataArray", dataArray);
               });
+              // done with constructing dataArray
+              // need to reverse to get earliest date first
+              dataArray.reverse();
             });
-
           objectArray.push({ address: address, dataArray: dataArray });
         });
 

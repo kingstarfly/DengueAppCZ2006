@@ -36,7 +36,7 @@ export const globalStyles = StyleSheet.create({
   },
 
   yellowContainer: {
-    backgroundColor: "#e6cc37",
+    backgroundColor: "#DFAF2B",
     flex: 1,
     padding: 20,
     alignItems: "center",

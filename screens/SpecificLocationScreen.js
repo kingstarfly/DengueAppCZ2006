@@ -1,5 +1,15 @@
 import React from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
+import {
+  VictoryLine,
+  VictoryChart,
+  VictoryTheme,
+  VictoryAxis,
+  VictoryBrushContainer,
+  VictoryVoronoiContainer,
+  VictoryCursorContainer,
+} from "victory-native";
+import { parseISO, format } from "date-fns";
 import { globalStyles } from "../styles/global";
 
 const SpecificLocationScreen = ({ route, navigation }) => {
@@ -15,25 +25,56 @@ const SpecificLocationScreen = ({ route, navigation }) => {
   );
   // console.log("Latest Data is: ", latestData);
   const num_cases = latestData.num_cases;
-  const dateISO = latestData.date;
-  console.log("This is the dateISO: ", dateISO);
 
-  const myDate = new Date(dateISO);
-  const dateString = `${myDate.getDate()} - ${myDate.getMonth()} - ${myDate.getFullYear()}`;
-  console.log(dateString);
+  const dateISO = latestData.date;
+  // console.log("This is the dateISO: ", dateISO);
+  const myDate = parseISO(dateISO);
+  const datefnsString = format(myDate, "d-MMM-yy");
+  // console.log(datefnsString);
 
   return (
-    <View style={globalStyles.redContainer}>
+    <View
+      style={
+        num_cases >= 10
+          ? globalStyles.redContainer
+          : num_cases >= 5
+          ? globalStyles.yellowContainer
+          : globalStyles.greenContainer
+      }
+    >
       <View style={styles.titleContainer}>
         <Text style={styles.title}>{address}</Text>
       </View>
       <View style={styles.numberContainer}>
         <Text style={styles.bigNumber}>{num_cases}</Text>
         <Text style={styles.desc}>Total cases in the last 14 days</Text>
-        <Text style={styles.time}> Updated {dateString}</Text>
+        <Text style={styles.time}> Updated {datefnsString}</Text>
       </View>
       <View style={styles.graphContainer}>
-        <Text>Graph</Text>
+        <VictoryChart
+          width={400}
+          theme={VictoryTheme.grayscale}
+          containerComponent={
+            <VictoryVoronoiContainer
+              labels={({ datum }) => {
+                return datum._y;
+              }}
+            />
+          }
+          domainPadding={{ y: [10, 30], x: [0, 20] }}
+        >
+          <VictoryLine
+            style={{
+              data: { stroke: "#c43a31", strokeWidth: 2 },
+              parent: { border: "1px solid #ccc" },
+            }}
+            data={dataArray}
+            x={(data) => {
+              return format(parseISO(data.date), "d MMM");
+            }}
+            y="num_cases"
+          />
+        </VictoryChart>
       </View>
     </View>
   );
@@ -66,14 +107,11 @@ const styles = StyleSheet.create({
   },
   time: {
     color: "#ffffffcc",
-    fontSize: 10,
+    fontSize: 16,
   },
   graphContainer: {
     flex: 4,
-    justifyContent: "center",
-    borderWidth: 1,
-    width: "100%",
-    alignItems: "center",
+    justifyContent: "flex-end",
   },
 });
 

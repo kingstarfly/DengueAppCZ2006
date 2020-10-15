@@ -3,10 +3,24 @@ import { StyleSheet, Text, View, Button } from "react-native";
 import { globalStyles } from "../styles/global";
 
 const SpecificLocationScreen = ({ route, navigation }) => {
-  const { address, num_cases } = route.params;
+  // only takes address name as route param
+  const {
+    addressObject: { address, dataArray },
+  } = route.params;
 
-  // !! need to call firebase here to grab the numbers and trend for this specific location
-  console.log(route.params); // for debugging
+  // dataArray is an array of objects with 3 fields. "id", "date" and "num_cases".
+
+  let latestData = dataArray.reduce((a, b) =>
+    new Date(a.date) > new Date(b.date) ? a : b
+  );
+  // console.log("Latest Data is: ", latestData);
+  const num_cases = latestData.num_cases;
+  const dateISO = latestData.date;
+  console.log("This is the dateISO: ", dateISO);
+
+  const myDate = new Date(dateISO);
+  const dateString = `${myDate.getDate()} - ${myDate.getMonth()} - ${myDate.getFullYear()}`;
+  console.log(dateString);
 
   return (
     <View style={globalStyles.redContainer}>
@@ -16,6 +30,7 @@ const SpecificLocationScreen = ({ route, navigation }) => {
       <View style={styles.numberContainer}>
         <Text style={styles.bigNumber}>{num_cases}</Text>
         <Text style={styles.desc}>Total cases in the last 14 days</Text>
+        <Text style={styles.time}> Updated {dateString}</Text>
       </View>
       <View style={styles.graphContainer}>
         <Text>Graph</Text>
@@ -48,6 +63,10 @@ const styles = StyleSheet.create({
   desc: {
     color: "#ffffffcc",
     fontSize: 16,
+  },
+  time: {
+    color: "#ffffffcc",
+    fontSize: 10,
   },
   graphContainer: {
     flex: 4,

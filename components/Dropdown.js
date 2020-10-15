@@ -8,23 +8,28 @@ import {
   TextInput,
 } from "react-native";
 
-const ListItem = ({ item, handleOptionPress }) => {
+const ListItem = ({ addressObject, handleOptionPress }) => {
+  // console.log("From dropdown listitem - addressObject is... ", addressObject);
+  const address = addressObject.address;
+
   return (
     <TouchableOpacity
       style={styles.itemStyle}
-      onPress={() => handleOptionPress(item)}
+      onPress={() => handleOptionPress(addressObject)}
     >
-      <Text style={styles.option}>{item.address}</Text>
+      <Text style={styles.option}>{address}</Text>
     </TouchableOpacity>
   );
 };
 
-const Dropdown = ({ selectedAddresses, handleOptionPress, query }) => {
-  console.log("Dropdown", selectedAddresses);
-  console.log("query from dropdown", query);
+const Dropdown = ({ selectedAddressObjects, handleOptionPress, query }) => {
+  // console.log("Dropdown", selectedAddressObjects);
+  // console.log("query from dropdown", query);
 
   const renderItem = ({ item }) => {
-    return <ListItem item={item} handleOptionPress={handleOptionPress} />;
+    return (
+      <ListItem addressObject={item} handleOptionPress={handleOptionPress} />
+    );
   };
 
   const ItemSeperator = () => {
@@ -43,9 +48,9 @@ const Dropdown = ({ selectedAddresses, handleOptionPress, query }) => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={query != "" ? selectedAddresses : []}
+        data={query != "" ? selectedAddressObjects : []}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(addressObject) => addressObject.address} // key is the key of the object, which is the address name
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={ItemSeperator}
       />

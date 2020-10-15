@@ -53,29 +53,40 @@ const MOCK_DATA = [
 
 const SelectLocationScreen = ({ navigation }) => {
   const [query, setQuery] = useState("");
-  const [selectedAddresses, setSelectedAddresses] = useState([]);
-  const [addressObjects, setAddressObjects] = useState([]); // get from firebase and not change this
+  const [selectedAddressObjects, setSelectedAddressObjects] = useState([]);
+  const [initialAddressObjects, setInitialAddressObjects] = useState([]); // get from firebase and not change this
 
-  const entityRef = firebase.firestore().collection("14DayData");
+  const entityRef = firebase.firestore().collection("14DayData2");
 
   useEffect(() => {
+    // populate selectedAddresses which is just an array of addresss names only.
     entityRef
-      .doc("13102020")
       .get()
-      .then((doc) => {
-        let newAddressObjects = [];
-        for (const [address, caseObject] of Object.entries(doc.data())) {
-          newAddressObjects = [
-            ...newAddressObjects,
-            {
-              id: caseObject.id,
-              address: address,
-              num_cases: caseObject.num_cases,
-            },
-          ];
-        }
-        console.log("Retrieved from firebase", newAddressObjects);
-        setAddressObjects(newAddressObjects);
+      .then((querySnapshot) => {
+        let objectArray = [];
+        querySnapshot.forEach((doc) => {
+          // doc represents the addressobject. Has attribute "address" and has a sub-collection "data".
+          const address = doc.data().address;
+          let dataArray = [];
+          doc.ref
+            .collection("data")
+            .get()
+            .then((innerQuerySnapShot) => {
+              innerQuerySnapShot.forEach((innerDoc) => {
+                dataArray.push({
+                  id: innerDoc.id,
+                  date: innerDoc.data().date.toDate().toISOString(),
+                  num_cases: innerDoc.data().num_cases,
+                });
+                // console.log("this is inner each dataArray", dataArray);
+              });
+            });
+
+          objectArray.push({ address: address, dataArray: dataArray });
+        });
+
+        // console.log("Retrieved from firebase", objectArray);
+        setInitialAddressObjects(objectArray);
       })
       .catch((error) => {
         console.log(error);
@@ -83,25 +94,24 @@ const SelectLocationScreen = ({ navigation }) => {
   }, []);
 
   const searchFilterFunction = (query) => {
-    console.log("SearchFuncton: addressObjects = ", addressObjects);
-    const newData = addressObjects.filter((item) => {
+    const newData = initialAddressObjects.filter((item) => {
       const queryText = query.toLowerCase();
       const itemText = item.address.toLowerCase();
       return itemText.indexOf(queryText) > -1;
     });
 
-    console.log("SearchFuncton: newData = ", newData);
+    // console.log("SearchFuncton: newData = ", newData);
 
-    setSelectedAddresses(newData);
+    setSelectedAddressObjects(newData);
     setQuery(query);
   };
 
   const handleOptionPress = (addressObject) => {
+    // only passes address name to screen
     navigation.navigate("Cases", {
       screen: "SpecificLocation",
       params: {
-        address: addressObject.address,
-        num_cases: addressObject.num_cases,
+        addressObject: addressObject,
       },
     });
   };
@@ -114,7 +124,7 @@ const SelectLocationScreen = ({ navigation }) => {
       <View style={styles.pickerContainer}>
         <SearchBar query={query} searchFilterFunction={searchFilterFunction} />
         <Dropdown
-          selectedAddresses={selectedAddresses}
+          selectedAddressObjects={selectedAddressObjects}
           handleOptionPress={handleOptionPress}
           query={query}
         />

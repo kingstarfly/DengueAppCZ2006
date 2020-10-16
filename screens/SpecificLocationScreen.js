@@ -9,6 +9,7 @@ import {
   VictoryVoronoiContainer,
   VictoryCursorContainer,
 } from "victory-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { parseISO, format } from "date-fns";
 import { globalStyles } from "../styles/global";
 
@@ -33,7 +34,7 @@ const SpecificLocationScreen = ({ route, navigation }) => {
   // console.log(datefnsString);
 
   return (
-    <View
+    <SafeAreaView
       style={
         num_cases >= 10
           ? globalStyles.redContainer
@@ -76,7 +77,7 @@ const SpecificLocationScreen = ({ route, navigation }) => {
           />
         </VictoryChart>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -99,7 +100,6 @@ const styles = StyleSheet.create({
   bigNumber: {
     fontSize: 150,
     color: "#f5f5f5",
-    fontFamily: "sans-serif-medium",
   },
   desc: {
     color: "#ffffffcc",

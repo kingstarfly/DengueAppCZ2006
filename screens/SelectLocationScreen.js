@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { globalStyles } from "../styles/global";
 import { firebase } from "../firebase/config";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import Dropdown from "../components/Dropdown";
 import SearchBar from "../components/SearchBar";
@@ -121,7 +122,7 @@ const SelectLocationScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={globalStyles.blueContainer}>
+    <SafeAreaView style={globalStyles.blueContainer}>
       <View style={styles.locationContainer}>
         <Text style={styles.title}>Select your location</Text>
       </View>
@@ -133,7 +134,7 @@ const SelectLocationScreen = ({ navigation }) => {
           query={query}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button } from "react-native";
 import { globalStyles } from "../styles/global";
 import { firebase } from "../firebase/config";
 import { format, formatDistanceToNow } from "date-fns";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { YellowBox } from "react-native";
 YellowBox.ignoreWarnings(["Setting a timer"]); // for firebase warnings
@@ -30,7 +31,7 @@ const SingaporeLocationScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <View style={globalStyles.yellowContainer}>
+    <SafeAreaView style={globalStyles.yellowContainer}>
       {isLoading ? (
         <Text>Loading Spinner</Text>
       ) : (
@@ -40,9 +41,9 @@ const SingaporeLocationScreen = ({ navigation }) => {
           </View>
           <View style={styles.numberContainer}>
             <Text style={styles.bigNumber}>{dailyObject.num_cases}</Text>
-            <Text style={styles.desc}>Total cases today</Text>
+            <Text style={styles.desc}>Total cases</Text>
             <Text style={styles.time}>
-              Updated {formatDistanceToNow(dailyObject.date)}
+              Updated {formatDistanceToNow(dailyObject.date)} ago
             </Text>
           </View>
 
@@ -51,7 +52,7 @@ const SingaporeLocationScreen = ({ navigation }) => {
           </View>
         </Fragment>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -73,11 +74,10 @@ const styles = StyleSheet.create({
   bigNumber: {
     fontSize: 150,
     color: "#f5f5f5",
-    fontFamily: "sans-serif-medium",
   },
   desc: {
     color: "#ffffffcc",
-    fontSize: 16,
+    fontSize: 26,
   },
   time: {
     color: "#fffc",

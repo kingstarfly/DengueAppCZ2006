@@ -6,9 +6,12 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import * as MailComposer from "expo-mail-composer";
 import { globalStyles } from "../styles/global";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const ReportScreen = ({ navigation }) => {
   const [details, setDetails] = React.useState("");
@@ -31,12 +34,40 @@ const ReportScreen = ({ navigation }) => {
     setPicture({ localUri: pickerResult.uri });
   };
 
-  let submitReport = async () => {
-    //pass
+  let handleSendEmail = async () => {
+    let options = {
+      // recipients: ["Contact_NEA@nea.gov.sg"],
+      recipients: ["xingxiang@twotreesgroup.com"],
+      subject: "Potential Dengue Breeding Spot",
+      body: details,
+    };
+    if (picture) {
+      options = { ...options, attachments: [picture.localUri] };
+    }
+    let result = await MailComposer.composeAsync(options);
+
+    return Alert.alert(
+      "Email Success",
+      "Thank you for reporting this potential breeding ground!",
+      [
+        {
+          text: "Clear and Return to Home",
+          onPress: handleClear,
+          style: "cancel",
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  let handleClear = () => {
+    setDetails("");
+    setPicture(null);
+    navigation.navigate("Home");
   };
 
   return (
-    <View style={globalStyles.redContainer}>
+    <SafeAreaView style={globalStyles.redContainer}>
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Report Dengue Breeding Ground</Text>
       </View>
@@ -74,12 +105,11 @@ const ReportScreen = ({ navigation }) => {
       )}
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleSendEmail}>
           <Text style={styles.buttonText}>Submit Report</Text>
         </TouchableOpacity>
       </View>
-      {/* <Button title="Go to Home" onPress={() => navigation.navigate("Home")} /> */}
-    </View>
+    </SafeAreaView>
   );
 };
 

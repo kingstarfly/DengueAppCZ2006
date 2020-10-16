@@ -1,10 +1,11 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const HomeScreen = ({ navigation }) => {
   return (
-    <View style={styles.beigeContainer}>
+    <SafeAreaView style={styles.beigeContainer}>
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Welcome</Text>
       </View>
@@ -32,7 +33,7 @@ const HomeScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <StatusBar hidden />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -48,7 +49,6 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontFamily: "Roboto",
     fontSize: 30,
     color: "#222",
   },
@@ -91,7 +91,6 @@ const styles = StyleSheet.create({
   menuText: {
     justifyContent: "flex-end",
     fontSize: 20,
-    fontFamily: "Roboto",
     fontWeight: "900",
     color: "#fffcf2",
   },

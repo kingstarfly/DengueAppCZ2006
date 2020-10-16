@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { globalStyles } from "../styles/global";
 
 const Resource = ({ data }) => {
@@ -45,7 +46,7 @@ const ResourcesScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={globalStyles.lightGreenContainer}>
+    <SafeAreaView style={globalStyles.lightGreenContainer}>
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Dengue Resources</Text>
       </View>
@@ -57,7 +58,7 @@ const ResourcesScreen = ({ navigation }) => {
           showsVerticalScrollIndicator={false}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

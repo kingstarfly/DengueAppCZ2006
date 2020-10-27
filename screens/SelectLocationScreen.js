@@ -17,47 +17,12 @@ import SearchBar from "../components/SearchBar";
 import { YellowBox } from "react-native";
 YellowBox.ignoreWarnings(["Setting a timer"]); // for firebase warnings
 
-const MOCK_DATA = [
-  {
-    id: "1",
-    text: "123 Teenage Road",
-  },
-  {
-    id: "2",
-    text: "456 Adam Street",
-  },
-  {
-    id: "3",
-    text: "777 Lucky Drive",
-  },
-  {
-    id: "4",
-    text: "10 Random Street",
-  },
-  {
-    id: "5",
-    text: "321 Teenage Road",
-  },
-  {
-    id: "6",
-    text: "654 Adam Street",
-  },
-  {
-    id: "7",
-    text: "111 Lucky Drive",
-  },
-  {
-    id: "8",
-    text: "5 Random Street",
-  },
-];
-
 const SelectLocationScreen = ({ navigation }) => {
   const [query, setQuery] = useState("");
   const [selectedAddressObjects, setSelectedAddressObjects] = useState([]);
   const [initialAddressObjects, setInitialAddressObjects] = useState([]); // get from firebase and not change this
 
-  const entityRef = firebase.firestore().collection("14DayData2");
+  const entityRef = firebase.firestore().collection("14DayData4");
 
   useEffect(() => {
     // populate selectedAddresses which is just an array of addresss names only.

@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
+import DengueStats from "../components/DengueStats";
 
 const HomeScreen = ({ navigation }) => {
   return (
@@ -9,6 +10,7 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Welcome</Text>
       </View>
+      <DengueStats></DengueStats>
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity

@@ -45,7 +45,7 @@ export class DengueStats extends Component {
             });
           });
           // Now, localityAndCaseArr holds many arrays of [loc, num].
-          console.log(localityAndCaseArr);
+          //   console.log(localityAndCaseArr);
           const entityRef = firebase.firestore().collection("14DayData4");
 
           localityAndCaseArr.forEach((arr) => {

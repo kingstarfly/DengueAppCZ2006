@@ -25,6 +25,7 @@ const SelectLocationScreen = ({ navigation }) => {
   const entityRef = firebase.firestore().collection("14DayData4");
 
   useEffect(() => {
+    console.log("In useEffect hook of Select Location Screen!");
     // populate selectedAddresses which is just an array of addresss names only.
     entityRef
       .get()
@@ -33,29 +34,13 @@ const SelectLocationScreen = ({ navigation }) => {
         querySnapshot.forEach((doc) => {
           // doc represents the addressobject. Has attribute "address" and has a sub-collection "data".
           const address = doc.data().address;
-          let dataArray = [];
-          doc.ref
-            .collection("data")
-            .orderBy("date", "desc")
-            .limit(5) // take only 5 dates
-            .get()
-            .then((innerQuerySnapShot) => {
-              innerQuerySnapShot.forEach((innerDoc) => {
-                dataArray.push({
-                  id: innerDoc.id,
-                  date: innerDoc.data().date.toDate().toISOString(),
-                  num_cases: innerDoc.data().num_cases,
-                });
-                // console.log("this is inner each dataArray", dataArray);
-              });
-              // done with constructing dataArray
-              // need to reverse to get earliest date first
-              dataArray.reverse();
-            });
+          let dataArray = doc.data().data;
+          dataArray.reverse();
+
           objectArray.push({ address: address, dataArray: dataArray });
         });
 
-        // console.log("Retrieved from firebase", objectArray);
+        console.log("Retrieved from firebase", objectArray);
         setInitialAddressObjects(objectArray);
       })
       .catch((error) => {

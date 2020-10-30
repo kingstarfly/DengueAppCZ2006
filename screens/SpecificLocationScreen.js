@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View, Button, ViewComponent } from "react-native";
 import {
   VictoryLine,
   VictoryChart,
@@ -19,8 +19,6 @@ const SpecificLocationScreen = ({ route, navigation }) => {
     addressObject: { address, dataArray },
   } = route.params;
 
-  // dataArray is an array of objects with 3 fields. "id", "date" and "num_cases".
-
   let latestData = dataArray.reduce((a, b) =>
     new Date(a.date) > new Date(b.date) ? a : b
   );
@@ -32,6 +30,8 @@ const SpecificLocationScreen = ({ route, navigation }) => {
   const myDate = parseISO(dateISO);
   const datefnsString = format(myDate, "d-MMM-yy");
   // console.log(datefnsString);
+
+  // console.log("data Array is: ", dataArray);
 
   return (
     <SafeAreaView
@@ -55,18 +55,18 @@ const SpecificLocationScreen = ({ route, navigation }) => {
         <VictoryChart
           width={400}
           theme={VictoryTheme.grayscale}
-          containerComponent={
-            <VictoryVoronoiContainer
-              labels={({ datum }) => {
-                return datum._y;
-              }}
-            />
-          }
+          // containerComponent={
+          //   <VictoryVoronoiContainer
+          //     labels={({ datum }) => {
+          //       return datum.y;
+          //     }}
+          //   />
+          // }
           domainPadding={{ y: [10, 30], x: [0, 20] }}
         >
           <VictoryLine
             style={{
-              data: { stroke: "#c43a31", strokeWidth: 2 },
+              data: { stroke: "#fff", strokeWidth: 4 },
               parent: { border: "1px solid #ccc" },
             }}
             data={dataArray}
@@ -74,6 +74,22 @@ const SpecificLocationScreen = ({ route, navigation }) => {
               return format(parseISO(data.date), "d MMM");
             }}
             y="num_cases"
+          />
+
+          <VictoryAxis
+            dependentAxis
+            style={{
+              axis: { stroke: "#fff", strokeWidth: 4 },
+              ticks: { stroke: "#eee", size: 1, strokeWidth: 3 },
+              tickLabels: { fontSize: 25, padding: 20, fill: "#ffe" },
+            }}
+          />
+          <VictoryAxis
+            style={{
+              axis: { stroke: "#fff", strokeWidth: 4 },
+              ticks: { stroke: "#eee", size: 1, strokeWidth: 3 },
+              tickLabels: { fontSize: 16, padding: 20, fill: "#ffe" },
+            }}
           />
         </VictoryChart>
       </View>

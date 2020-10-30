@@ -25,7 +25,7 @@ const SelectLocationScreen = ({ navigation }) => {
   const entityRef = firebase.firestore().collection("14DayData4");
 
   useEffect(() => {
-    console.log("In useEffect hook of Select Location Screen!");
+    // console.log("In useEffect hook of Select Location Screen!");
     // populate selectedAddresses which is just an array of addresss names only.
     entityRef
       .get()
@@ -35,12 +35,12 @@ const SelectLocationScreen = ({ navigation }) => {
           // doc represents the addressobject. Has attribute "address" and has a sub-collection "data".
           const address = doc.data().address;
           let dataArray = doc.data().data;
-          dataArray.reverse();
+          // dataArray.reverse();
 
           objectArray.push({ address: address, dataArray: dataArray });
         });
 
-        console.log("Retrieved from firebase", objectArray);
+        // console.log("Retrieved from firebase", objectArray);
         setInitialAddressObjects(objectArray);
       })
       .catch((error) => {

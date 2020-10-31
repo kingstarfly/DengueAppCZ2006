@@ -64,7 +64,7 @@ export class DengueStats extends Component {
                 entityRef.doc(arr[0]).update({
                   data: firebase.firestore.FieldValue.arrayUnion({
                     date: myDate,
-                    // date: "2020-10-23T14:00:00", // for testing update function
+                    // date: "2020-10-23T14:00:00", // for testing update `function
                     // num_cases: (parseInt(arr[1]) + 5).toString(),
                     num_cases: arr[1],
                   }),

@@ -81,7 +81,7 @@ const SpecificLocationScreen = ({ route, navigation }) => {
             style={{
               axis: { stroke: "#fff", strokeWidth: 4 },
               ticks: { stroke: "#eee", size: 1, strokeWidth: 3 },
-              tickLabels: { fontSize: 25, padding: 20, fill: "#ffe" },
+              tickLabels: { fontSize: 25, padding: 10, fill: "#ffe" },
             }}
           />
           <VictoryAxis
@@ -90,6 +90,7 @@ const SpecificLocationScreen = ({ route, navigation }) => {
               ticks: { stroke: "#eee", size: 1, strokeWidth: 3 },
               tickLabels: { fontSize: 16, padding: 20, fill: "#ffe" },
             }}
+            theme={VictoryTheme.material}
           />
         </VictoryChart>
       </View>
@@ -128,6 +129,7 @@ const styles = StyleSheet.create({
   graphContainer: {
     flex: 4,
     justifyContent: "flex-end",
+    paddingLeft: 20,
   },
 });
 

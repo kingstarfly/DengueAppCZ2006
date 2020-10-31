@@ -10,6 +10,7 @@ const SearchBar = ({ query, searchFilterFunction }) => {
         value={query}
         underlineColorAndroid="transparent"
         placeholder="Search Here..."
+        autoFocus
       />
     </View>
   );
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     height: 42,
     fontSize: 24,
-    color: "#ddd",
+    color: "#fdfdfdcc",
     borderRadius: 8,
     paddingHorizontal: 50,
   },

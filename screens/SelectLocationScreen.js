@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  TouchableOpacity,
-  LogBox,
-} from "react-native";
+import { StyleSheet, Text, View, KeyboardAvoidingView } from "react-native";
 import { globalStyles } from "../styles/global";
 import { firebase } from "../firebase/config";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -34,7 +27,9 @@ const SelectLocationScreen = ({ navigation }) => {
         querySnapshot.forEach((doc) => {
           // doc represents the addressobject. Has attribute "address" and has a sub-collection "data".
           const address = doc.data().address;
-          let dataArray = doc.data().data;
+          let dataArray = doc
+            .data()
+            .data.slice(Math.max(doc.data().data.length - 7, 0));
           // dataArray.reverse();
 
           objectArray.push({ address: address, dataArray: dataArray });
@@ -73,17 +68,23 @@ const SelectLocationScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={globalStyles.blueContainer}>
-      <View style={styles.locationContainer}>
-        <Text style={styles.title}>Select your location</Text>
-      </View>
-      <View style={styles.pickerContainer}>
-        <SearchBar query={query} searchFilterFunction={searchFilterFunction} />
-        <Dropdown
-          selectedAddressObjects={selectedAddressObjects}
-          handleOptionPress={handleOptionPress}
-          query={query}
-        />
-      </View>
+      <KeyboardAvoidingView behavior={"position"}>
+        <View style={styles.locationContainer}>
+          <Text style={styles.title}>Select your</Text>
+          <Text style={styles.title}>location</Text>
+        </View>
+        <View style={styles.pickerContainer}>
+          <SearchBar
+            query={query}
+            searchFilterFunction={searchFilterFunction}
+          />
+          <Dropdown
+            selectedAddressObjects={selectedAddressObjects}
+            handleOptionPress={handleOptionPress}
+            query={query}
+          />
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

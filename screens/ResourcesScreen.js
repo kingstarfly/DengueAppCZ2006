@@ -1,48 +1,126 @@
 import React from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { globalStyles } from "../styles/global";
 
+// images
+import dd1 from "../assets/dd1.png";
+import dd2 from "../assets/dd2.png";
+import dd3 from "../assets/dd3.png";
+import dd4 from "../assets/dd4.png";
+import dengue_symptoms from "../assets/dengue_symptoms.png";
+import zika_4 from "../assets/zika_4.jpg";
+
 const Resource = ({ data }) => {
-  console.log(data);
+  const renderSwitch = (param) => {
+    switch (data.name) {
+      case "dd":
+        return (
+          <React.Fragment>
+            <Image
+              source={dd1}
+              style={{
+                height: 280,
+                width: 280,
+                resizeMode: "contain",
+                marginBottom: 30,
+              }}
+            />
+            <Image
+              source={dd2}
+              style={{
+                height: 280,
+                width: 280,
+                resizeMode: "contain",
+                marginBottom: 30,
+              }}
+            />
+            <Image
+              source={dd3}
+              style={{
+                height: 280,
+                width: 280,
+                resizeMode: "contain",
+                marginBottom: 30,
+              }}
+            />
+            <Image
+              source={dd4}
+              style={{
+                height: 280,
+                width: 280,
+                resizeMode: "contain",
+                marginBottom: 30,
+              }}
+            />
+          </React.Fragment>
+        );
+        break;
+      case "symptoms":
+        return (
+          <React.Fragment>
+            <Image
+              source={dengue_symptoms}
+              style={{
+                height: 430,
+                width: 300,
+                resizeMode: "contain",
+                marginBottom: 30,
+              }}
+            />
+          </React.Fragment>
+        );
+        break;
+      case "zika":
+        return (
+          <React.Fragment>
+            <Image
+              source={zika_4}
+              style={{
+                height: 500,
+                width: 300,
+                resizeMode: "contain",
+                marginBottom: 30,
+              }}
+            />
+          </React.Fragment>
+        );
+
+        break;
+    }
+  };
   return (
     <View style={styles.resourceContainer}>
       <Text style={styles.resourceTitle}>{data.title}</Text>
       <Text style={styles.resourceBody}>{data.body}</Text>
-      <Text>{data.imgURI}</Text>
+      <View style={styles.imagesContainer}>{renderSwitch(data.name)}</View>
     </View>
   );
 };
 
 const FAKE_DATA = [
   {
-    title: "Do the 5-Step Mozzie Wipeout",
-    body: "Are you doing the Mozzie Wipeout correctly?",
-    imgURI: "placeholder img URI",
+    title: "Quick Info For You!",
+    name: "dd",
     id: "1",
   },
 
   {
     title: "What are the symptoms of Dengue?",
-    body: "Seek medical attention if you are showing these symptoms.",
-    imgURI: "placeholder img URI",
+    name: "symptoms",
     id: "2",
   },
 
   {
-    title: "Mythbusters: Can you get dengue twice??",
-    body: "Contrary to popular belief...",
-    imgURI: "placeholder img URI",
+    title: "Have You Done The Mozzie Wipeout?",
+    name: "zika",
     id: "3",
   },
 ];
 
 const ResourcesScreen = ({ navigation }) => {
   const renderItem = ({ item }) => {
-    return (
-      <Resource style={styles.resourceContainer} data={item} />
-      // <Text>hi</Text>
-    );
+    return <Resource style={styles.resourceContainer} data={item} />;
   };
 
   return (
@@ -82,7 +160,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingHorizontal: 30,
     paddingTop: 30,
-    paddingBottom: 100, // TO CHANGE THIS! NOTE!!
+    paddingBottom: 10, // TO CHANGE THIS! NOTE!!
   },
 
   resourceTitle: {
@@ -90,6 +168,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 10,
+  },
+
+  imagesContainer: {
+    marginTop: 10,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   resourceBody: {
@@ -103,7 +188,7 @@ const styles = StyleSheet.create({
     flex: 6,
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 10,
+    paddingHorizontal: 1,
   },
 });
 export default ResourcesScreen;

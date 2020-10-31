@@ -10,7 +10,7 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Welcome</Text>
       </View>
-      <DengueStats></DengueStats>
+      {/* <DengueStats></DengueStats> */}
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -68,15 +68,18 @@ const styles = StyleSheet.create({
 
   buttonBlue: {
     backgroundColor: "#2d77ecc2",
+    height: 110,
     paddingTop: 50,
-    paddingBottom: 30,
+    paddingBottom: 20,
     paddingHorizontal: 20,
     borderRadius: 10,
   },
 
   buttonRed: {
     backgroundColor: "#e7627dc2",
-    paddingTop: 50,
+    height: 110,
+
+    paddingTop: 20,
     paddingBottom: 30,
     paddingHorizontal: 20,
     borderRadius: 10,
@@ -84,6 +87,8 @@ const styles = StyleSheet.create({
 
   buttonGreen: {
     backgroundColor: "#3e9683c2",
+    height: 110,
+
     paddingTop: 50,
     paddingBottom: 30,
     paddingHorizontal: 20,
@@ -92,9 +97,9 @@ const styles = StyleSheet.create({
 
   menuText: {
     justifyContent: "flex-end",
-    fontSize: 20,
+    fontSize: 26,
     fontWeight: "900",
-    color: "#fffcf2",
+    color: "#ffffff",
   },
 });
 

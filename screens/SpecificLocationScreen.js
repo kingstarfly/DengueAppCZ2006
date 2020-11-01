@@ -8,6 +8,7 @@ import {
   VictoryBrushContainer,
   VictoryVoronoiContainer,
   VictoryCursorContainer,
+  VictoryArea,
 } from "victory-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { parseISO, format } from "date-fns";
@@ -54,20 +55,17 @@ const SpecificLocationScreen = ({ route, navigation }) => {
       <View style={styles.graphContainer}>
         <VictoryChart
           width={400}
-          theme={VictoryTheme.grayscale}
-          // containerComponent={
-          //   <VictoryVoronoiContainer
-          //     labels={({ datum }) => {
-          //       return datum.y;
-          //     }}
-          //   />
-          // }
+          theme={VictoryTheme.material}
           domainPadding={{ y: [10, 30], x: [0, 20] }}
         >
-          <VictoryLine
+          <VictoryArea
             style={{
-              data: { stroke: "#fff", strokeWidth: 4 },
-              parent: { border: "1px solid #ccc" },
+              data: {
+                fill: "#ffffff",
+                fillOpacity: 0.45,
+                stroke: "#fff",
+                strokeWidth: 3,
+              },
             }}
             data={dataArray}
             x={(data) => {
@@ -79,18 +77,17 @@ const SpecificLocationScreen = ({ route, navigation }) => {
           <VictoryAxis
             dependentAxis
             style={{
-              axis: { stroke: "#fff", strokeWidth: 4 },
-              ticks: { stroke: "#eee", size: 1, strokeWidth: 3 },
+              axis: { stroke: "#fff", strokeWidth: 0 },
+              ticks: { stroke: "#eee", size: 1 },
               tickLabels: { fontSize: 25, padding: 10, fill: "#ffe" },
             }}
           />
           <VictoryAxis
             style={{
-              axis: { stroke: "#fff", strokeWidth: 4 },
-              ticks: { stroke: "#eee", size: 1, strokeWidth: 3 },
+              axis: { stroke: "#fff", strokeWidth: 0 },
+              ticks: { stroke: "#eee", size: 1 },
               tickLabels: { fontSize: 16, padding: 20, fill: "#ffe" },
             }}
-            theme={VictoryTheme.material}
           />
         </VictoryChart>
       </View>
@@ -105,7 +102,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "#ffffff",
-    fontSize: 44,
+    fontSize: 36,
     textAlign: "center",
   },
 
@@ -113,18 +110,20 @@ const styles = StyleSheet.create({
     flex: 5,
     justifyContent: "flex-start",
     alignItems: "center",
+    marginTop: -15,
   },
   bigNumber: {
-    fontSize: 150,
+    fontSize: 130,
     color: "#f5f5f5",
+    marginBottom: -20,
   },
   desc: {
-    color: "#ffffffcc",
-    fontSize: 16,
+    color: "#ffffff",
+    fontSize: 20,
   },
   time: {
     color: "#ffffffcc",
-    fontSize: 16,
+    fontSize: 20,
   },
   graphContainer: {
     flex: 4,

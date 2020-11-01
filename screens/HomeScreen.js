@@ -34,7 +34,7 @@ const HomeScreen = ({ navigation }) => {
           <Text style={styles.menuText}>View Resources</Text>
         </TouchableOpacity>
       </View>
-      <StatusBar hidden />
+      <StatusBar hidden={true} />
     </SafeAreaView>
   );
 };

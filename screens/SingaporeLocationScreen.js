@@ -22,7 +22,7 @@ const SingaporeLocationScreen = ({ navigation }) => {
       .then((querySnapshot) => {
         // console.log(querySnapshot);
         querySnapshot.forEach((doc) => {
-          console.log(doc.data());
+          // console.log(doc.data());
           const { date, num_cases } = doc.data();
           setDailyObject({ date: date.toDate(), num_cases });
           setIsLoading(false);
@@ -37,7 +37,7 @@ const SingaporeLocationScreen = ({ navigation }) => {
       ) : (
         <Fragment>
           <View style={styles.titleContainer}>
-            <Text style={styles.title}>Singapore Today</Text>
+            <Text style={styles.title}>Singapore</Text>
           </View>
           <View style={styles.numberContainer}>
             <Text style={styles.bigNumber}>{dailyObject.num_cases}</Text>
@@ -62,8 +62,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    color: "#ffffffee",
-    fontSize: 44,
+    color: "#ffffff",
+    fontSize: 36,
   },
 
   numberContainer: {
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   bigNumber: {
-    fontSize: 150,
+    fontSize: 130,
     color: "#f5f5f5",
   },
   desc: {

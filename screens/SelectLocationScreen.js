@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, KeyboardAvoidingView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { globalStyles } from "../styles/global";
 import { firebase } from "../firebase/config";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -14,6 +20,7 @@ const SelectLocationScreen = ({ navigation }) => {
   const [query, setQuery] = useState("");
   const [selectedAddressObjects, setSelectedAddressObjects] = useState([]);
   const [initialAddressObjects, setInitialAddressObjects] = useState([]); // get from firebase and not change this
+  const [hasUserClicked, setHasUserClicked] = useState(false);
 
   const entityRef = firebase.firestore().collection("14DayData4");
 
@@ -66,24 +73,32 @@ const SelectLocationScreen = ({ navigation }) => {
     });
   };
 
+  const handleUserClick = () => {
+    setHasUserClicked(true);
+  };
+
   return (
     <SafeAreaView style={globalStyles.blueContainer}>
-      <KeyboardAvoidingView behavior={"position"}>
-        <View style={styles.locationContainer}>
-          <Text style={styles.title}>Select your</Text>
-          <Text style={styles.title}>location</Text>
-        </View>
-        <View style={styles.pickerContainer}>
-          <SearchBar
-            query={query}
-            searchFilterFunction={searchFilterFunction}
-          />
-          <Dropdown
-            selectedAddressObjects={selectedAddressObjects}
-            handleOptionPress={handleOptionPress}
-            query={query}
-          />
-        </View>
+      <KeyboardAvoidingView behavior={"padding"} style={{ paddingTop: 100 }}>
+        <TouchableWithoutFeedback
+          onPress={handleUserClick}
+          style={{ borderWidth: 1, borderColor: "red" }}
+        >
+          <View style={styles.pickerContainer}>
+            <SearchBar
+              query={query}
+              searchFilterFunction={searchFilterFunction}
+              userClicked={hasUserClicked}
+            />
+
+            <Dropdown
+              selectedAddressObjects={selectedAddressObjects}
+              handleOptionPress={handleOptionPress}
+              query={query}
+              style={{ borderColor: "red", borderWidth: 1 }}
+            />
+          </View>
+        </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

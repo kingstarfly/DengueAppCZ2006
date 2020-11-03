@@ -22,7 +22,7 @@ const SelectLocationScreen = ({ navigation }) => {
   const [initialAddressObjects, setInitialAddressObjects] = useState([]); // get from firebase and not change this
   const [hasUserClicked, setHasUserClicked] = useState(false);
 
-  const entityRef = firebase.firestore().collection("14DayData4");
+  const entityRef = firebase.firestore().collection("14DayData7");
 
   useEffect(() => {
     // console.log("In useEffect hook of Select Location Screen!");

@@ -11,7 +11,7 @@ import {
   VictoryArea,
 } from "victory-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { parseISO, format } from "date-fns";
+import { parseISO, format, parse } from "date-fns";
 import { globalStyles } from "../styles/global";
 
 const SpecificLocationScreen = ({ route, navigation }) => {
@@ -48,82 +48,132 @@ const SpecificLocationScreen = ({ route, navigation }) => {
         <Text style={styles.title}>{address}</Text>
       </View>
       <View style={styles.numberContainer}>
-        <Text style={styles.bigNumber}>{num_cases}</Text>
-        <Text style={styles.desc}>Total cases in the last 14 days</Text>
-        <Text style={styles.time}> Updated {datefnsString}</Text>
+        <View style={styles.bigNumberCircle}>
+          <Text
+            style={num_cases > 99 ? styles.bigNumberThree : styles.bigNumberTwo}
+          >
+            {num_cases}
+          </Text>
+        </View>
+        <View style={styles.description}>
+          <Text style={styles.suffix}>Total cases in the last 14 days</Text>
+          <Text style={styles.time}> Updated {datefnsString}</Text>
+        </View>
       </View>
-      <View style={styles.graphContainer}>
-        <VictoryChart
-          width={400}
-          theme={VictoryTheme.material}
-          domainPadding={{ y: [10, 30], x: [0, 20] }}
-        >
-          <VictoryArea
-            style={{
-              data: {
-                fill: "#ffffff",
-                fillOpacity: 0.45,
-                stroke: "#fff",
-                strokeWidth: 3,
-              },
-            }}
-            data={dataArray}
-            x={(data) => {
-              return format(parseISO(data.date), "d MMM");
-            }}
-            y="num_cases"
-          />
+      {dataArray.length > 1 ? (
+        <View style={styles.graphContainer}>
+          <VictoryChart
+            width={400}
+            theme={VictoryTheme.material}
+            domainPadding={{ y: [10, 30], x: [0, 20] }}
+          >
+            <VictoryArea
+              style={{
+                data: {
+                  fill: "#ffffff",
+                  fillOpacity: 0.45,
+                  stroke: "#fff",
+                  strokeWidth: 3,
+                },
+              }}
+              data={dataArray}
+              x={(data) => {
+                return format(parseISO(data.date), "d MMM");
+              }}
+              y={(data) => {
+                return parseInt(data.num_cases);
+              }}
+            />
 
-          <VictoryAxis
-            dependentAxis
-            style={{
-              axis: { stroke: "#fff", strokeWidth: 0 },
-              ticks: { stroke: "#eee", size: 1 },
-              tickLabels: { fontSize: 25, padding: 10, fill: "#ffe" },
-            }}
-          />
-          <VictoryAxis
-            style={{
-              axis: { stroke: "#fff", strokeWidth: 0 },
-              ticks: { stroke: "#eee", size: 1 },
-              tickLabels: { fontSize: 16, padding: 20, fill: "#ffe" },
-            }}
-          />
-        </VictoryChart>
-      </View>
+            <VictoryAxis
+              dependentAxis
+              style={{
+                axis: { stroke: "#fff", strokeWidth: 0 },
+                ticks: { stroke: "#eee", size: 1 },
+                tickLabels: { fontSize: 25, padding: 10, fill: "#ffe" },
+              }}
+            />
+            <VictoryAxis
+              style={{
+                axis: { stroke: "#fff", strokeWidth: 0 },
+                ticks: { stroke: "#eee", size: 1 },
+                tickLabels: {
+                  fontSize: 14,
+                  padding: 20,
+                  fill: "#ffe",
+                  angle: 30,
+                },
+              }}
+            />
+          </VictoryChart>
+        </View>
+      ) : (
+        <View
+          style={{
+            flex: 4,
+            justifyContent: "flex-start",
+            paddingHorizontal: 90,
+          }}
+        >
+          <Text style={{ fontSize: 20, textAlign: "center" }}>
+            Not enough data to show graph
+          </Text>
+        </View>
+      )}
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   titleContainer: {
-    flex: 2,
-    justifyContent: "center",
+    flex: 1.5,
+    justifyContent: "flex-end",
+    paddingHorizontal: 15,
   },
   title: {
     color: "#ffffff",
-    fontSize: 36,
+    fontSize: 28,
     textAlign: "center",
   },
-
   numberContainer: {
-    flex: 5,
+    flex: 7,
     justifyContent: "flex-start",
     alignItems: "center",
-    marginTop: -15,
+    marginVertical: 20,
   },
-  bigNumber: {
-    fontSize: 130,
+  bigNumberTwo: {
+    fontSize: 100,
     color: "#f5f5f5",
-    marginBottom: -20,
+    textAlign: "center",
   },
-  desc: {
+  bigNumberThree: {
+    fontSize: 80,
+    color: "#f5f5f5",
+    textAlign: "center",
+  },
+  bigNumberCircle: {
+    borderColor: "#fff5",
+    aspectRatio: 1,
+    borderWidth: 3,
+    width: 200,
+    borderRadius: 1000,
+    backgroundColor: "#3333",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  description: {
+    marginTop: 25,
+    alignItems: "center",
+  },
+
+  suffix: {
     color: "#ffffff",
-    fontSize: 20,
+    fontSize: 16,
   },
   time: {
     color: "#ffffffcc",
-    fontSize: 20,
+    fontSize: 16,
   },
   graphContainer: {
     flex: 4,

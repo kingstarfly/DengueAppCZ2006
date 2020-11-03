@@ -40,11 +40,23 @@ const SingaporeLocationScreen = ({ navigation }) => {
             <Text style={styles.title}>Singapore</Text>
           </View>
           <View style={styles.numberContainer}>
-            <Text style={styles.bigNumber}>{dailyObject.num_cases}</Text>
-            <Text style={styles.desc}>Total cases</Text>
-            <Text style={styles.time}>
-              Updated {formatDistanceToNow(dailyObject.date)} ago
-            </Text>
+            <View style={styles.bigNumberCircle}>
+              <Text
+                style={
+                  dailyObject.num_cases > 99
+                    ? styles.bigNumberThree
+                    : styles.bigNumberTwo
+                }
+              >
+                {dailyObject.num_cases}
+              </Text>
+            </View>
+            <View style={styles.description}>
+              <Text style={styles.suffix}>Total cases today</Text>
+              <Text style={styles.time}>
+                Updated {formatDistanceToNow(dailyObject.date)} ago
+              </Text>
+            </View>
           </View>
 
           <View style={styles.graphContainer}>
@@ -71,13 +83,34 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
   },
-  bigNumber: {
-    fontSize: 130,
+  bigNumberTwo: {
+    fontSize: 100,
     color: "#f5f5f5",
+    textAlign: "center",
   },
-  desc: {
+  bigNumberThree: {
+    fontSize: 80,
+    color: "#f5f5f5",
+    textAlign: "center",
+  },
+  bigNumberCircle: {
+    borderColor: "#fff5",
+    aspectRatio: 1,
+    borderWidth: 3,
+    width: 200,
+    borderRadius: 1000,
+    backgroundColor: "#3333",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  description: {
+    marginTop: 10,
+    alignItems: "center",
+  },
+
+  suffix: {
     color: "#ffffffcc",
-    fontSize: 26,
+    fontSize: 20,
   },
   time: {
     color: "#fffc",

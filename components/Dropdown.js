@@ -38,7 +38,7 @@ const Dropdown = ({ selectedAddressObjects, handleOptionPress, query }) => {
         style={{
           height: 1,
           width: "86%",
-          backgroundColor: "#000",
+          backgroundColor: "#bebebe",
           marginLeft: "7%",
         }}
       ></View>
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   option: {
-    fontSize: 22,
-    color: "#333d",
+    fontSize: 16,
+    color: "#000",
   },
 });

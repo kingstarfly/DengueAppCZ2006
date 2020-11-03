@@ -36,7 +36,8 @@ export const globalStyles = StyleSheet.create({
   },
 
   yellowContainer: {
-    backgroundColor: "#DFAF2B",
+    // backgroundColor: "#E77728", // Princeton Orange
+    backgroundColor: "#FF9F1Cde", // Orange Peel
     flex: 1,
     padding: 20,
     alignItems: "center",

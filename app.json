@@ -13,9 +13,10 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
+    "androidStatusBar": {
+      "hidden": true
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.kingstarfly.mozi-app"

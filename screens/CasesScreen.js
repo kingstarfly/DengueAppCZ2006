@@ -37,13 +37,11 @@ const CasesScreen = ({ navigation }) => {
           backgroundColor: "transparent",
           position: "absolute",
           left: 0,
-          top: 10,
+          top: 30,
           right: 0,
           borderWidth: 0,
           elevation: 0,
           marginHorizontal: 30,
-          marginBottom: 100,
-          // todo FIX THE SPACING
         },
       }}
       initialRouteName="SpecificLocation"

@@ -7,7 +7,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { globalStyles } from "../styles/global";
-import { firebase } from "../firebase/config";
+import { useFBGetAll } from "../customHooks/FirebaseHooks";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import Dropdown from "../components/Dropdown";
@@ -19,36 +19,10 @@ YellowBox.ignoreWarnings(["Setting a timer"]); // for firebase warnings
 const SelectLocationScreen = ({ navigation }) => {
   const [query, setQuery] = useState("");
   const [selectedAddressObjects, setSelectedAddressObjects] = useState([]);
-  const [initialAddressObjects, setInitialAddressObjects] = useState([]); // get from firebase and not change this
   const [hasUserClicked, setHasUserClicked] = useState(false);
 
-  const entityRef = firebase.firestore().collection("14DayData7");
-
-  useEffect(() => {
-    // console.log("In useEffect hook of Select Location Screen!");
-    // populate selectedAddresses which is just an array of addresss names only.
-    entityRef
-      .get()
-      .then((querySnapshot) => {
-        let objectArray = [];
-        querySnapshot.forEach((doc) => {
-          // doc represents the addressobject. Has attribute "address" and has a sub-collection "data".
-          const address = doc.data().address;
-          let dataArray = doc
-            .data()
-            .data.slice(Math.max(doc.data().data.length - 7, 0));
-          // dataArray.reverse();
-
-          objectArray.push({ address: address, dataArray: dataArray });
-        });
-
-        // console.log("Retrieved from firebase", objectArray);
-        setInitialAddressObjects(objectArray);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  // Separation of Concerns
+  const initialAddressObjects = useFBGetAll();
 
   const searchFilterFunction = (query) => {
     const newData = initialAddressObjects.filter((item) => {
@@ -56,8 +30,6 @@ const SelectLocationScreen = ({ navigation }) => {
       const itemText = item.address.toLowerCase();
       return itemText.indexOf(queryText) > -1;
     });
-
-    // console.log("SearchFuncton: newData = ", newData);
 
     setSelectedAddressObjects(newData);
     setQuery(query);

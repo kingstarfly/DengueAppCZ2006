@@ -5,30 +5,14 @@ import { firebase } from "../firebase/config";
 import { format, formatDistanceToNow } from "date-fns";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { useFBGetOne } from "../customHooks/FirebaseHooks";
+
 import { YellowBox } from "react-native";
 YellowBox.ignoreWarnings(["Setting a timer"]); // for firebase warnings
 
 const SingaporeLocationScreen = ({ navigation }) => {
-  const [dailyObject, setDailyObject] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-
-  const entityRef = firebase.firestore().collection("dailyData");
-
-  useEffect(() => {
-    entityRef
-      .orderBy("date", "desc")
-      .limit(1)
-      .get()
-      .then((querySnapshot) => {
-        // console.log(querySnapshot);
-        querySnapshot.forEach((doc) => {
-          // console.log(doc.data());
-          const { date, num_cases } = doc.data();
-          setDailyObject({ date: date.toDate(), num_cases });
-          setIsLoading(false);
-        });
-      });
-  }, []);
+  const dailyObject = useFBGetOne(setIsLoading);
 
   return (
     <SafeAreaView

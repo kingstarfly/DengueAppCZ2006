@@ -31,7 +31,9 @@ const SingaporeLocationScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView style={globalStyles.yellowContainer}>
+    <SafeAreaView
+      style={{ ...globalStyles.blueContainer, ...{ paddingTop: 100 } }}
+    >
       {isLoading ? (
         <Text>Loading Spinner</Text>
       ) : (
@@ -40,17 +42,16 @@ const SingaporeLocationScreen = ({ navigation }) => {
             <Text style={styles.title}>Singapore</Text>
           </View>
           <View style={styles.numberContainer}>
-            <View style={styles.bigNumberCircle}>
-              <Text
-                style={
-                  dailyObject.num_cases > 99
-                    ? styles.bigNumberThree
-                    : styles.bigNumberTwo
-                }
-              >
-                {dailyObject.num_cases}
-              </Text>
-            </View>
+            <Text
+              style={
+                dailyObject.num_cases > 99
+                  ? styles.bigNumberThree
+                  : styles.bigNumberTwo
+              }
+            >
+              {dailyObject.num_cases}
+            </Text>
+
             <View style={styles.description}>
               <Text style={styles.suffix}>Total cases today</Text>
               <Text style={styles.time}>
@@ -70,8 +71,9 @@ const SingaporeLocationScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   titleContainer: {
-    flex: 2,
-    justifyContent: "center",
+    flex: 3,
+    justifyContent: "flex-start",
+    paddingHorizontal: 15,
   },
   title: {
     color: "#ffffff",
@@ -79,17 +81,17 @@ const styles = StyleSheet.create({
   },
 
   numberContainer: {
-    flex: 5,
+    flex: 7,
     justifyContent: "flex-start",
     alignItems: "center",
   },
   bigNumberTwo: {
-    fontSize: 100,
+    fontSize: 120,
     color: "#f5f5f5",
     textAlign: "center",
   },
   bigNumberThree: {
-    fontSize: 80,
+    fontSize: 100,
     color: "#f5f5f5",
     textAlign: "center",
   },
@@ -117,7 +119,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   graphContainer: {
-    flex: 4,
+    flex: 7,
     justifyContent: "center",
     width: "100%",
     alignItems: "center",

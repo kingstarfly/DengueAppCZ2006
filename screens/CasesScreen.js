@@ -16,17 +16,34 @@ const CasesScreen = ({ navigation }) => {
         labelStyle: {
           fontSize: 14,
           textTransform: "capitalize",
+          color: "#fff",
+          fontWeight: "bold",
+          paddingHorizontal: 8,
+          paddingVertical: 3,
+          // borderWidth: 1,
+          borderRadius: 50,
         },
 
         indicatorStyle: {
-          width: 10,
-          height: 10,
-          marginLeft: 100,
-          marginBottom: 2,
+          width: 8,
+          height: 8,
+          marginLeft: 85,
+          marginBottom: 40,
           borderRadius: 10,
           marginHorizontal: "auto",
-          backgroundColor: "white",
-          borderWidth: 1
+          backgroundColor: "#fffc",
+        },
+        style: {
+          backgroundColor: "transparent",
+          position: "absolute",
+          left: 0,
+          top: 10,
+          right: 0,
+          borderWidth: 0,
+          elevation: 0,
+          marginHorizontal: 30,
+          marginBottom: 100,
+          // todo FIX THE SPACING
         },
       }}
       initialRouteName="SpecificLocation"

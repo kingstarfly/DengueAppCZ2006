@@ -7,8 +7,6 @@ export const globalStyles = StyleSheet.create({
     padding: 20,
     alignItems: "center",
     justifyContent: "center",
-    // borderWidth: 1,
-    // borderColor: 'red'
   },
 
   redContainer: {

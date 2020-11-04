@@ -97,65 +97,63 @@ export class DengueStats extends Component {
 
   createData = () => {
     const entityRef = firebase.firestore().collection("14DayData7");
-    entityRef
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          // For each doc, add a new date and num_cases till 12 Nov
-          let start = new Date("2020-10-30");
-          let end = new Date("2020-11-12");
-          let diff = (end.getTime() - start.getTime()) / (1000 * 3600 * 24);
-          if (doc.data().data.length > 1) return;
-          let num = parseInt(doc.data().data[0].num_cases);
+    entityRef.get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        // For each doc, add a new date and num_cases till 12 Nov
+        let start = new Date("2020-10-30");
+        let end = new Date("2020-11-12");
+        let diff = (end.getTime() - start.getTime()) / (1000 * 3600 * 24);
+        if (doc.data().data.length > 1) return;
+        let num = parseInt(doc.data().data[0].num_cases);
 
-          let choices = [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            -5,
-            -4,
-            -3,
-            -2,
-            -2,
-            -1,
-            -1,
-            -1,
-            1,
-            1,
-            1,
-            2,
-            2,
-            3,
-            4,
-            4,
-            5,
-            10,
-            11,
-            15,
-          ];
+        let choices = [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          -5,
+          -4,
+          -3,
+          -2,
+          -2,
+          -1,
+          -1,
+          -1,
+          1,
+          1,
+          1,
+          2,
+          2,
+          3,
+          4,
+          4,
+          5,
+          10,
+          11,
+          15,
+        ];
 
-          for (let i = 0; i < diff; i++) {
-            let newDate = new Date(start.getTime());
-            newDate.setDate(newDate.getDate() + i);
+        for (let i = 0; i < diff; i++) {
+          let newDate = new Date(start.getTime());
+          newDate.setDate(newDate.getDate() + i);
 
-            let indexOfChoice = Math.floor(Math.random() * choices.length);
-            num += choices[indexOfChoice]; // randomly add to cumulative num.
-            // Ensure num is at least 0
-            num = Math.max(0, num);
+          let indexOfChoice = Math.floor(Math.random() * choices.length);
+          num += choices[indexOfChoice]; // randomly add to cumulative num.
+          // Ensure num is at least 0
+          num = Math.max(0, num);
 
-            entityRef.doc(doc.id).update({
-              data: firebase.firestore.FieldValue.arrayUnion({
-                date: newDate.toISOString(),
-                num_cases: num.toString(),
-              }),
-            });
-          }
-        });
-      })
-      .then(console.log("Done with createData"));
+          entityRef.doc(doc.id).update({
+            data: firebase.firestore.FieldValue.arrayUnion({
+              date: newDate.toISOString(),
+              num_cases: num.toString(),
+            }),
+          });
+        }
+      });
+      console.log(`Collection has ${querySnapshot.size} documents.`);
+    });
   };
   render() {
     return (

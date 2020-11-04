@@ -34,27 +34,25 @@ const SpecificLocationScreen = ({ route, navigation }) => {
 
   // console.log("data Array is: ", dataArray);
 
+  const styleToUse =
+    num_cases >= 10
+      ? globalStyles.redContainer
+      : num_cases >= 5
+      ? globalStyles.yellowContainer
+      : globalStyles.greenContainer;
+
   return (
-    <SafeAreaView
-      style={
-        num_cases >= 10
-          ? globalStyles.redContainer
-          : num_cases >= 5
-          ? globalStyles.yellowContainer
-          : globalStyles.greenContainer
-      }
-    >
+    <SafeAreaView style={{ ...styleToUse, ...{ paddingTop: 100 } }}>
       <View style={styles.titleContainer}>
         <Text style={styles.title}>{address}</Text>
       </View>
       <View style={styles.numberContainer}>
-        <View style={styles.bigNumberCircle}>
-          <Text
-            style={num_cases > 99 ? styles.bigNumberThree : styles.bigNumberTwo}
-          >
-            {num_cases}
-          </Text>
-        </View>
+        <Text
+          style={num_cases > 99 ? styles.bigNumberThree : styles.bigNumberTwo}
+        >
+          {num_cases}
+        </Text>
+
         <View style={styles.description}>
           <Text style={styles.suffix}>Total cases in the last 14 days</Text>
           <Text style={styles.time}> Updated {datefnsString}</Text>
@@ -63,7 +61,7 @@ const SpecificLocationScreen = ({ route, navigation }) => {
       {dataArray.length > 1 ? (
         <View style={styles.graphContainer}>
           <VictoryChart
-            width={400}
+            height={300}
             theme={VictoryTheme.material}
             domainPadding={{ y: [10, 30], x: [0, 20] }}
           >
@@ -126,44 +124,34 @@ const SpecificLocationScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   titleContainer: {
-    flex: 1.5,
-    justifyContent: "flex-end",
+    flex: 3,
+    justifyContent: "flex-start",
     paddingHorizontal: 15,
   },
   title: {
     color: "#ffffff",
-    fontSize: 28,
+    fontSize: 32,
     textAlign: "center",
   },
   numberContainer: {
-    flex: 7,
-    justifyContent: "flex-start",
+    flex: 2,
+    justifyContent: "center",
     alignItems: "center",
-    marginVertical: 20,
+    paddingBottom: 20,
   },
   bigNumberTwo: {
-    fontSize: 100,
+    fontSize: 120,
     color: "#f5f5f5",
     textAlign: "center",
   },
   bigNumberThree: {
-    fontSize: 80,
+    fontSize: 100,
     color: "#f5f5f5",
     textAlign: "center",
   },
-  bigNumberCircle: {
-    borderColor: "#fff5",
-    aspectRatio: 1,
-    borderWidth: 3,
-    width: 200,
-    borderRadius: 1000,
-    backgroundColor: "#3333",
-    justifyContent: "center",
-    alignItems: "center",
-  },
 
   description: {
-    marginTop: 25,
+    marginTop: 0,
     alignItems: "center",
   },
 
@@ -176,7 +164,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   graphContainer: {
-    flex: 4,
+    flex: 7,
     justifyContent: "flex-end",
     paddingLeft: 20,
   },

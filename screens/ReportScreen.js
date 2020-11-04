@@ -13,6 +13,7 @@ import * as MailComposer from "expo-mail-composer";
 import { globalStyles } from "../styles/global";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Location from "expo-location";
+import { Ionicons } from "@expo/vector-icons";
 
 const ReportScreen = ({ navigation }) => {
   const [details, setDetails] = React.useState("");
@@ -38,8 +39,8 @@ const ReportScreen = ({ navigation }) => {
 
   let handleSendEmail = async () => {
     let options = {
-      // recipients: ["Contact_NEA@nea.gov.sg"],
-      recipients: ["xingxiang@twotreesgroup.com"],
+      recipients: ["Contact_NEA@nea.gov.sg"],
+      // recipients: ["xingxiang@twotreesgroup.com"],
       subject: "Potential Dengue Breeding Spot",
       body: `Dear NEA,\n\nThere is a potential breeding spot I would like to report!\n\nLocation: ${details}.\n\nBrief Description: ${desc}\n\nThank you.`,
     };
@@ -84,7 +85,10 @@ const ReportScreen = ({ navigation }) => {
       longitude: coords.longitude,
     });
     const { name, street, country, postalCode } = fullAddress[0];
-    let formattedAddress = `${name} ${street} ${country} ${postalCode}`;
+    let formattedAddress = `${name} ${street} ${country}`;
+    if (postalCode) {
+      formattedAddress += ` ${postalCode}`;
+    }
     setDetails(formattedAddress);
   };
 
@@ -105,7 +109,7 @@ const ReportScreen = ({ navigation }) => {
           <TextInput
             onChangeText={(text) => setDetails(text)}
             value={details}
-            placeholder={"..."}
+            placeholder={"Type here ..."}
             placeholderTextColor={"#333"}
             style={styles.textInput}
             multiline
@@ -119,7 +123,7 @@ const ReportScreen = ({ navigation }) => {
           <TextInput
             onChangeText={(text) => setDesc(text)}
             value={desc}
-            placeholder={"..."}
+            placeholder={"Type here..."}
             placeholderTextColor={"#333"}
             style={styles.textInput}
             multiline
@@ -135,7 +139,8 @@ const ReportScreen = ({ navigation }) => {
           onPress={openImagePickerAsync}
           disabled={picture}
         >
-          <Text style={styles.buttonText}>Upload a Photo</Text>
+          <Ionicons name="md-camera" size={40} color="#fffc" />
+          <Text style={styles.buttonText}>Attach a Photo</Text>
         </TouchableOpacity>
       ) : (
         <View style={styles.imageContainer}>
@@ -160,9 +165,12 @@ const styles = StyleSheet.create({
   },
 
   titleContainer: {
-    flex: 1,
+    flex: 3,
     // borderWidth: 1,
-    padding: 50,
+    justifyContent: "center",
+    // alignItems: "flex-start",
+    paddingHorizontal: 50,
+    // borderWidth: 1,
   },
 
   detailsContainer: {
@@ -194,7 +202,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   button: {
-    backgroundColor: "#e64f6ec2",
+    backgroundColor: "#e64f6e",
     borderRadius: 10,
     width: 150,
     alignSelf: "center",
@@ -203,13 +211,16 @@ const styles = StyleSheet.create({
   },
 
   uploadImg: {
-    backgroundColor: "#e64f6ec2",
-    borderRadius: 100,
+    backgroundColor: "#e64f6e",
+    borderRadius: 20,
     width: 150,
-    height: 150,
+    height: 100,
     alignSelf: "center",
     margin: 50,
     justifyContent: "center",
+    alignItems: "center",
+    // borderWidth: 6,
+    // borderColor: "#bbb",
   },
 
   thumbnail: {

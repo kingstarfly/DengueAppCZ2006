@@ -145,6 +145,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: 20,
   },
 
   title: {
@@ -171,7 +172,7 @@ const styles = StyleSheet.create({
   },
 
   imagesContainer: {
-    marginTop: 10,
+    marginTop: 0,
     flex: 1,
     justifyContent: "center",
     alignItems: "center",

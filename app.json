@@ -14,12 +14,12 @@
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
-    "androidStatusBar": {
-      "hidden": true
-    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.kingstarfly.mozi-app"
+    },
+    "androidStatusBar": {
+      "hidden": true
     },
     "web": {
       "favicon": "./assets/favicon.png"

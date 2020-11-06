@@ -37,7 +37,7 @@ const SingaporeLocationScreen = ({ navigation }) => {
             </Text>
 
             <View style={styles.description}>
-              <Text style={styles.suffix}>Total cases today</Text>
+              <Text style={styles.suffix}>Total cases in 24 hours</Text>
               <Text style={styles.time}>
                 Updated {formatDistanceToNow(dailyObject.date)} ago
               </Text>

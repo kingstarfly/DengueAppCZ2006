@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import * as MailComposer from "expo-mail-composer";
-import { Camera } from "expo-camera";
 import { globalStyles } from "../styles/global";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Location from "expo-location";

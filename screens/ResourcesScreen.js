@@ -13,7 +13,7 @@ import zika_4 from "../assets/zika_4.jpg";
 
 const Resource = ({ data }) => {
   const renderSwitch = (param) => {
-    switch (data.name) {
+    switch (param) {
       case "dd":
         return (
           <React.Fragment>
@@ -160,8 +160,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginBottom: 20,
     paddingHorizontal: 30,
-    paddingTop: 30,
-    paddingBottom: 10, // TO CHANGE THIS! NOTE!!
+    paddingTop: 20,
+    paddingBottom: 20, // TO CHANGE THIS! NOTE!!
   },
 
   resourceTitle: {
@@ -189,7 +189,6 @@ const styles = StyleSheet.create({
     flex: 6,
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 1,
   },
 });
 export default ResourcesScreen;

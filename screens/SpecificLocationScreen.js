@@ -38,7 +38,7 @@ const SpecificLocationScreen = ({ route, navigation }) => {
   const styleToUse =
     num_cases >= 10
       ? globalStyles.redContainer
-      : num_cases >= 5
+      : num_cases >= 1
       ? globalStyles.yellowContainer
       : globalStyles.greenContainer;
 

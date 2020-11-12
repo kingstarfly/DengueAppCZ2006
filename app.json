@@ -16,7 +16,15 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.kingstarfly.mozi-app"
+      "bundleIdentifier": "com.tyym.mozi-app",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.tyym.mozi",
+      "versionCode": 1
+    },
+    "androidStatusBar": {
+      "hidden": true
     },
     "androidStatusBar": {
       "hidden": true

@@ -14,37 +14,40 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { parseISO, format, parse } from "date-fns";
 import { globalStyles } from "../styles/global";
 
+const getFormattedDateStringAndNumCases = (dataArray) => {
+  let latestData = dataArray.reduce((a, b) =>
+    new Date(a.date) > new Date(b.date) ? a : b
+  );
+
+  const num_cases = latestData.num_cases;
+  const dateISO = latestData.date;
+  const myDate = parseISO(dateISO);
+  const datefnsString = format(myDate, "d-MMM-yy");
+  return [datefnsString, num_cases];
+};
+
 const SpecificLocationScreen = ({ route, navigation }) => {
-  // only takes address name as route param
   const {
     addressObject: { address, dataArray },
   } = route.params;
 
-  let latestData = dataArray.reduce((a, b) =>
-    new Date(a.date) > new Date(b.date) ? a : b
+  const [datefnsString, num_cases] = getFormattedDateStringAndNumCases(
+    dataArray
   );
-  // console.log("Latest Data is: ", latestData);
-  const num_cases = latestData.num_cases;
-
-  const dateISO = latestData.date;
-  // console.log("This is the dateISO: ", dateISO);
-  const myDate = parseISO(dateISO);
-  const datefnsString = format(myDate, "d-MMM-yy");
-  // console.log(datefnsString);
-
-  // console.log("data Array is: ", dataArray);
 
   const styleToUse =
     num_cases >= 10
       ? globalStyles.redContainer
-      : num_cases >= 5
+      : num_cases >= 1
       ? globalStyles.yellowContainer
       : globalStyles.greenContainer;
 
   return (
     <SafeAreaView style={{ ...styleToUse, ...{ paddingTop: 100 } }}>
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>{address}</Text>
+        <Text style={styles.title}>
+          {address.length <= 35 ? address : `${address.slice(0, 35)}...`}
+        </Text>
       </View>
       <View style={styles.numberContainer}>
         <Text

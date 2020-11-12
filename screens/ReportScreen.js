@@ -143,9 +143,12 @@ const ReportScreen = ({ navigation }) => {
           <Text style={styles.buttonText}>Attach a Photo</Text>
         </TouchableOpacity>
       ) : (
-        <View style={styles.imageContainer}>
+        <TouchableOpacity
+          onPress={openImagePickerAsync}
+          style={styles.imageContainer}
+        >
           <Image source={{ uri: picture.localUri }} style={styles.thumbnail} />
-        </View>
+        </TouchableOpacity>
       )}
 
       <View style={styles.buttonContainer}>
